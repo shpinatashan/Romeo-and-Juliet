@@ -16,12 +16,11 @@ struct stat st = {};
 void ReadPoem(int size , char buf[]);
 long long int Count(char buf[], int size);
 void Change(char buf[], int size, char* text[], char* textCOPY[]);
-void OutputFile(char* text[],long long int nlines);
+void OutputFile(char* arr[],long long int nlines);
 int AlphEncoding(char chr);
-const void Sort(char* text[],long long int nlines);
+const void Sort(char* arr[],long long int nlines);
 int ComparatorStr(const void* ptr1,const void* ptr2);
 int check(void* ptr);
-void MyFree(char** arr);
 char* Reverse(char* str1);
 void Rhyme(char* textRhyme[], char* textCOPY[], long long int nlines);
 
@@ -54,18 +53,17 @@ char** textCOPY  = (char**)calloc(nlines,sizeof(char*));
 char** textCorr  = (char**)calloc(nlines,sizeof(char*));
 char** textRhyme = (char**)calloc(nlines,sizeof(char*));
 
-if (check(text) == -1) return -1;
-if (check(textCOPY) == -1) return -1;
+if (check(text)      == -1) return -1;
+if (check(textCOPY)  == -1) return -1;
+if (check(textRhyme) == -1) return -1;
+if (check(textCorr)  == -1) return -1;
 
 
 Change(buf, size, text, textCOPY);
 Sort(text, nlines);
-
 Rhyme(textRhyme, textCOPY, nlines);
 Sort (textRhyme, nlines);
 Rhyme(textCorr, textRhyme, nlines);
-
-
 
 OutputFile(text, nlines);
 OutputFile(textCorr, nlines);
@@ -181,13 +179,10 @@ int AlphEncoding(char chr)
 
     while(chr)
     {
-        if ( chr == alph[i] )
-            return i;
-
+        if ( chr == alph[i] ) return i;
         i++;
-
-        if (i > 51) return -2;
-        if (chr == '\0') return -1;
+        if (i > 51)           return -2;
+        if (chr == '\0')      return -1;
     }
     return -1;
 }
@@ -217,29 +212,23 @@ int ComparatorStr(const void* ptr1,const void* ptr2)
 
 }
 
-const void Sort(char* text[],long long int nlines)
+const void Sort(char* arr[],long long int nlines)
 {
-    check(text);
-    qsort(text, nlines, sizeof(char*),  ComparatorStr);
+    check(arr);
+    qsort(arr, nlines, sizeof(char*),  ComparatorStr);
 }
 
-void OutputFile(char* text[], long long int nlines)
+void OutputFile(char* arr[], long long int nlines)
 {
-    check(text);
+    check(arr);
     FILE* f2 = fopen("alph_rhyme_original.txt", "a+");
 
     for(int i = 0; i < nlines; i++)
     {
-        check(text[i]);
-        fputs(text[i], f2);
+        check(arr[i]);
+        fputs(arr[i], f2);
         fprintf (f2,"\n");
     }
     fprintf (f2,"\n\n\n\n");
     fclose(f2);
-}
-
-void MyFree(char** arr)
-{
-    free(*arr);
-    *arr = NULL;
 }
