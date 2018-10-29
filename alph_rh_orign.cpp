@@ -23,7 +23,8 @@ int ComparatorStr(const void* ptr1,const void* ptr2);
 int check(void* ptr);
 char* Reverse(char* str1);
 void Rhyme(char* textRhyme[], char* textCOPY[], long long int nlines);
-
+void MyFree(char** arr);
+void MyFree(char*** arr);
 
 int main()
 {
@@ -71,15 +72,25 @@ OutputFile(textCOPY, nlines);
 
 printf("~meow~");
 
-free(text);           text = NULL;
-free(textCOPY);   textCOPY = NULL;
-free(textRhyme); textRhyme = NULL;
-free(buf);             buf = NULL;
-free(textCorr);   textCorr = NULL;
+MyFree(&text);
+MyFree(&textCOPY);
+MyFree(&textRhyme);
+MyFree(&buf);
+MyFree(&textCorr);
 
 return 0;
 }
 
+void MyFree(char*** arr)
+{
+    free(*arr);
+    *arr = NULL;
+}
+void MyFree(char** arr)
+{
+    free(*arr);
+    *arr = NULL;
+}
 int check(void* ptr)
 {
     if (ptr == NULL)
