@@ -99,15 +99,12 @@ char* Reverse(char* str1)
  }
 int AlphEncoding(char chr)
 {
-/*
+
     FILE* juliet = fopen("RaJ.txt", "r");
     char alph[NAlph] = {};
-    fread(alph, sizeof(char), NAlph, juliet);
+    fread(alph, sizeof(char), NAlph-1 , juliet);
     fclose(juliet);
-*/
 
-    char alph[NAlph] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"};
-    
     int i = 0;
 
     while(chr)
