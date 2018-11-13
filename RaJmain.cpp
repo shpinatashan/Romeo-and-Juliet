@@ -2,6 +2,7 @@
 
 int main()
 {
+struct stat st = {};
 stat("RaJ.txt", &st);
 int size = st.st_size +1;
 char * buf = (char*) calloc(size, sizeof(char));
