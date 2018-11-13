@@ -90,7 +90,7 @@ char* Reverse(char* str1)
     char * str2 = (char*) calloc(length, sizeof(char));
 
     int i = 0;
-    for (int n = (strlen(str1) - 1); n >= 0; n-- )
+    for (int n =( length - 1); n >= 0; n--)
         {
             str2[i] = str1[n];
             i++;
@@ -101,20 +101,20 @@ int AlphEncoding(char chr)
 {
 
     FILE* juliet = fopen("RaJ.txt", "r");
-    char alph[NAlph] = {};
-    fread(alph, sizeof(char), NAlph-1 , juliet);
+    char alph [ArrSize] = {};
+    fgets (alph, sizeof(alph), juliet);
+    int NAlph = strlen (alph);
     fclose(juliet);
 
     int i = 0;
-
     while(chr)
     {
         if ( chr == alph[i] ) return i;
         i++;
-        if (i > NAlph-2)           return -2;
-        if (chr == '\0')      return -1;
+        if (i > NAlph-1)      return NotLetter;
+        if (chr == '\0')      return EndofStr;
     }
-    return -1;
+    return EndofStr;
 }
 
 int ComparatorStr(const void* ptr1,const void* ptr2)
@@ -122,11 +122,11 @@ int ComparatorStr(const void* ptr1,const void* ptr2)
     char* str1 = *((char**) ptr1);
     char* str2 = *((char**) ptr2);
 
-    while ((AlphEncoding( *str1) != -1) && (AlphEncoding( *str2) != -1))
+    while ((AlphEncoding( *str1) != EndofStr) && (AlphEncoding( *str2) != EndofStr))
     {
-        while(AlphEncoding( *str1) == -2) str1++;
+        while(AlphEncoding( *str1) == NotLetter) str1++;
 
-        while(AlphEncoding( *str2) == -2) str2++;
+        while(AlphEncoding( *str2) == NotLetter) str2++;
 
         if (AlphEncoding(*str1) != AlphEncoding(*str2))
             return (AlphEncoding(*str1) - AlphEncoding(*str2));
@@ -136,9 +136,9 @@ int ComparatorStr(const void* ptr1,const void* ptr2)
             str2++;
         }
     }
-    if ((AlphEncoding( *str1) != -1) && (AlphEncoding( *str2)   != -1)) return 0;
-    if ((AlphEncoding( *str1) != -1) && (AlphEncoding( *str2)   == -1)) return -1;
-    if ((AlphEncoding( *str1) == -1) && (AlphEncoding( *str2)   != -1)) return 1;
+    if ((AlphEncoding( *str1) != EndofStr) && (AlphEncoding( *str2)   != EndofStr)) return 0;
+    if ((AlphEncoding( *str1) != EndofStr) && (AlphEncoding( *str2)   == EndofStr)) return -1;
+    if ((AlphEncoding( *str1) == EndofStr) && (AlphEncoding( *str2)   != EndofStr)) return 1;
 
 }
 

@@ -7,10 +7,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <sys/stat.h>
-using namespace std;
-const int NAlph = 53;
 
-struct stat st = {};
+const int ArrSize   = 53;
+const int NotLetter = -2;
+const int EndofStr  = -1;
 
 void ReadPoem(int size , char buf[]);
 long long int Count(char buf[], int size);
